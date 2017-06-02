@@ -73,3 +73,17 @@ pub fn test_remove_third<T: PartialEq + Clone + Debug, L: List<T>>(v0: T, v1: T,
     assert_eq!(b0, *v[0]);
     assert_eq!(b1, *v[1]);
 }
+
+pub fn test_remove_head<T: PartialEq + Clone + Debug, L: List<T>>(v0: T, v1: T, v2: T) {
+    let b0 = v0.clone();
+    let b1 = v1.clone();
+    let b2 = v2.clone();
+    let list = L::empty().add(v0).add(v1).add(v2);
+    let found = list.find(&b0);
+    assert!(found.is_some());
+    let list = list.remove(found.unwrap());
+    let v = list.collect();
+    assert_eq!(2, v.len());
+    assert_eq!(b1, *v[0]);
+    assert_eq!(b2, *v[1]);
+}

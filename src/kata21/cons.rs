@@ -56,6 +56,7 @@ impl<T: PartialEq> List<T> for ConsList<T> {
             let mut cons_node = &self.head;
             loop {
                 if Rc::ptr_eq(cons_node, node) {
+                    values.reverse();
                     let head = values
                         .into_iter()
                         .fold(tail.clone(),
@@ -164,5 +165,12 @@ mod tests {
         tests::test_remove_third::<String, ConsList<String>>(String::from("yo"),
                                                              String::from("lo"),
                                                              String::from("go"));
+    }
+
+    #[test]
+    fn test_remove_head() {
+        tests::test_remove_head::<String, ConsList<String>>(String::from("yo"),
+                                                            String::from("lo"),
+                                                            String::from("go"));
     }
 }
