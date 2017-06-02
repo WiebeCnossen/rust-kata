@@ -56,11 +56,11 @@ impl<T: PartialEq> List<T> for ConsList<T> {
             let mut cons_node = &self.head;
             loop {
                 if Rc::ptr_eq(cons_node, node) {
-                    values.reverse();
-                    let head = values
-                        .into_iter()
-                        .fold(tail.clone(),
-                              |head, &ref value| Rc::new(Cons(value.clone(), head)));
+                    let mut head = tail.clone();
+                    while let Some(&ref value) = values.pop() {
+                        head = Rc::new(Cons(value.clone(), head));
+                    }
+
                     return ConsList { head };
                 }
 
